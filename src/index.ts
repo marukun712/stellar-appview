@@ -25,7 +25,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
       return c.json({ error: "Missing required parameter: uri" }, 400);
     }
 
-    if (isNaN(limit) || limit < 1 || limit > 100) {
+    if (limit < 1 || limit > 100) {
       return c.json({ error: "Invalid limit: must be between 1 and 100" }, 400);
     }
 
@@ -46,6 +46,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
     });
 
     const hasMore = reactions.length > limit;
+
     if (hasMore) {
       reactions.pop();
     }
