@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Reaction {
+  id        String   @id
+  uri       String
+  cid       String
+  emoji     String
+  authorDid String
+  createdAt DateTime @default(now())
+}
