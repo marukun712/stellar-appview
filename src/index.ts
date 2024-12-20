@@ -30,6 +30,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
     }
 
     const where: any = { post_uri: uri };
+
     if (cid) {
       where.post_cid = cid;
     }
@@ -37,7 +38,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
     const take = limit + 1;
 
     if (cursor) {
-      where.id = { gt: cursor };
+      where.rkey = { gt: cursor };
     }
 
     const reactions = await prisma.reaction.findMany({
