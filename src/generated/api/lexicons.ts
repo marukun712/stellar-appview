@@ -68,8 +68,11 @@ export const schemaDict = {
       },
       reaction: {
         type: 'object',
-        required: ['subject', 'createdAt', 'emoji', 'actor'],
+        required: ['rkey', 'subject', 'createdAt', 'emoji', 'actor'],
         properties: {
+          rkey: {
+            type: 'string',
+          },
           subject: {
             type: 'ref',
             ref: 'lex:com.atproto.repo.strongRef',
@@ -99,15 +102,11 @@ export const schemaDict = {
         key: 'tid',
         record: {
           type: 'object',
-          required: ['subject', 'createdAt', 'emoji', 'authorDid'],
+          required: ['subject', 'emoji', 'authorDid'],
           properties: {
             subject: {
               type: 'ref',
               ref: 'lex:com.atproto.repo.strongRef',
-            },
-            createdAt: {
-              type: 'string',
-              format: 'datetime',
             },
             emoji: {
               type: 'string',

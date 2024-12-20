@@ -44,6 +44,7 @@ export function toKnownErr(e: any) {
 }
 
 export interface Reaction {
+  rkey: string
   subject: ComAtprotoRepoStrongRef.Main
   createdAt: string
   emoji: string

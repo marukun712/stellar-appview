@@ -9,7 +9,6 @@ import * as ComAtprotoRepoStrongRef from '../../../com/atproto/repo/strongRef'
 
 export interface Record {
   subject: ComAtprotoRepoStrongRef.Main
-  createdAt: string
   emoji: string
   authorDid: string
   [k: string]: unknown

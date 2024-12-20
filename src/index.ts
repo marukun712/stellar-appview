@@ -11,7 +11,7 @@ const app = new Hono();
 jetstream.start();
 
 app.get("/", (c) => {
-  return c.text("This is the Stellar AppView Server.");
+  return c.text("This is a Stellar AppView Server.");
 });
 
 app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
@@ -29,12 +29,13 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
       return c.json({ error: "Invalid limit: must be between 1 and 100" }, 400);
     }
 
-    const where: any = { uri };
+    const where: any = { post_uri: uri };
     if (cid) {
-      where.cid = cid;
+      where.post_cid = cid;
     }
 
     const take = limit + 1;
+
     if (cursor) {
       where.id = { gt: cursor };
     }
@@ -42,7 +43,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
     const reactions = await prisma.reaction.findMany({
       where,
       take,
-      orderBy: { id: "asc" },
+      orderBy: { rkey: "asc" },
     });
 
     const hasMore = reactions.length > limit;
@@ -56,10 +57,8 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
         const actor = await getProfile(reaction.authorDid);
 
         return {
-          subject: {
-            uri: reaction.uri,
-            cid: reaction.cid,
-          },
+          rkey: reaction.rkey,
+          subject: { uri: reaction.post_uri, cid: reaction.post_cid },
           createdAt:
             reaction.createdAt?.toISOString() ?? new Date().toISOString(),
           emoji: reaction.emoji,
@@ -71,7 +70,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
     const response = {
       uri,
       ...(cid && { cid }),
-      ...(hasMore && { cursor: reactions[reactions.length - 1].id }),
+      ...(hasMore && { cursor: reactions[reactions.length - 1].rkey }),
       reactions: transformedReactions,
     };
 

@@ -8,10 +8,9 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["subject", "createdAt", "emoji", "authorDid"],
+        "required": ["subject", "emoji", "authorDid"],
         "properties": {
           "subject": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
-          "createdAt": { "type": "string", "format": "datetime" },
           "emoji": { "type": "string" },
           "authorDid": { "type": "string", "format": "at-identifier" }
         }

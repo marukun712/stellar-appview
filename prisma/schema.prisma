@@ -8,10 +8,11 @@ datasource db {
 }
 
 model Reaction {
-  id        String   @id
-  uri       String
-  cid       String
+  rkey        String   @id
+  post_uri  String
+  post_cid  String
   emoji     String
+  record String
   authorDid String
   createdAt DateTime @default(now())
 }

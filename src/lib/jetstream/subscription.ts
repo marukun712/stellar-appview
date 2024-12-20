@@ -15,16 +15,21 @@ jetstream.onCreate("app.netlify.stellarbsky.reaction", async (event) => {
 
   await prisma.reaction.upsert({
     where: {
-      id: event.commit.rkey,
+      rkey: event.commit.rkey,
     },
     update: {
+      post_uri: record.subject.uri,
+      post_cid: record.subject.cid,
       emoji: record.emoji,
+      record: JSON.stringify(event.commit),
+      authorDid: record.authorDid,
     },
     create: {
-      id: event.commit.rkey,
-      uri: record.subject.uri,
-      cid: record.subject.cid,
+      rkey: event.commit.rkey,
+      post_uri: record.subject.uri,
+      post_cid: record.subject.cid,
       emoji: record.emoji,
+      record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },
   });
@@ -37,16 +42,21 @@ jetstream.onUpdate("app.netlify.stellarbsky.reaction", async (event) => {
 
   await prisma.reaction.upsert({
     where: {
-      id: event.commit.rkey,
+      rkey: event.commit.rkey,
     },
     update: {
+      post_uri: record.subject.uri,
+      post_cid: record.subject.cid,
       emoji: record.emoji,
+      record: JSON.stringify(event.commit),
+      authorDid: record.authorDid,
     },
     create: {
-      id: event.commit.rkey,
-      uri: record.subject.uri,
-      cid: record.subject.cid,
+      rkey: event.commit.rkey,
+      post_uri: record.subject.uri,
+      post_cid: record.subject.cid,
       emoji: record.emoji,
+      record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },
   });
@@ -56,6 +66,6 @@ jetstream.onDelete("app.netlify.stellarbsky.reaction", async (event) => {
   console.log(`Deleted Reaction: ${event.commit.rkey}`);
 
   await prisma.reaction.delete({
-    where: { id: event.commit.rkey },
+    where: { rkey: event.commit.rkey },
   });
 });
