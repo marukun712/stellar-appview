@@ -7,18 +7,15 @@ This is a Stellar AppView Server.
 Write the required environment variables.
 
 ```
-DATABASE_URL=
+DB_NAME=
+DB_USER=
+DB_PASS=
 ```
 
 Run the app.
 
 ```
-yarn install
-yarn run dev
-```
-
-```
-open http://localhost:3000
+docker-compose up
 ```
 
 After that, open http://localhost:3000 in your browser.
