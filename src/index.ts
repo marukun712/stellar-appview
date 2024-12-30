@@ -6,9 +6,12 @@ import { getProfile } from "./lib/actor/getProfile.js";
 
 import { jetstream } from "./lib/jetstream/subscription.js";
 import type { Reaction } from "@prisma/client";
+import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono();
 jetstream.start();
+
+app.get("/emojis/*", serveStatic({ root: "./src" }));
 
 app.get("/", (c) => {
   return c.text("This is a Stellar AppView Server.");
@@ -62,7 +65,7 @@ app.get("/xrpc/" + ids.AppNetlifyStellarbskyGetReaction, async (c) => {
           subject: { uri: reaction.post_uri, cid: reaction.post_cid },
           createdAt:
             reaction.createdAt?.toISOString() ?? new Date().toISOString(),
-          emoji: reaction.emoji,
+          record: reaction.record,
           actor,
         };
       })

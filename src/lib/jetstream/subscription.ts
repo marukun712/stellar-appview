@@ -20,7 +20,6 @@ jetstream.onCreate("app.netlify.stellarbsky.reaction", async (event) => {
     update: {
       post_uri: record.subject.uri,
       post_cid: record.subject.cid,
-      emoji: record.emoji,
       record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },
@@ -28,7 +27,6 @@ jetstream.onCreate("app.netlify.stellarbsky.reaction", async (event) => {
       rkey: event.commit.rkey,
       post_uri: record.subject.uri,
       post_cid: record.subject.cid,
-      emoji: record.emoji,
       record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },
@@ -47,7 +45,6 @@ jetstream.onUpdate("app.netlify.stellarbsky.reaction", async (event) => {
     update: {
       post_uri: record.subject.uri,
       post_cid: record.subject.cid,
-      emoji: record.emoji,
       record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },
@@ -55,7 +52,6 @@ jetstream.onUpdate("app.netlify.stellarbsky.reaction", async (event) => {
       rkey: event.commit.rkey,
       post_uri: record.subject.uri,
       post_cid: record.subject.cid,
-      emoji: record.emoji,
       record: JSON.stringify(event.commit),
       authorDid: record.authorDid,
     },

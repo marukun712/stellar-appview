@@ -11,7 +11,10 @@
         "required": ["subject", "emoji", "authorDid"],
         "properties": {
           "subject": { "type": "ref", "ref": "com.atproto.repo.strongRef" },
-          "emoji": { "type": "string" },
+          "emoji": {
+            "type": "ref",
+            "ref": "blue.moji.collection.item#itemView"
+          },
           "authorDid": { "type": "string", "format": "at-identifier" }
         }
       }

@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN yarn install
 
-CMD npx prisma db push && npm run dev
+CMD npx prisma db push && yarn run dev

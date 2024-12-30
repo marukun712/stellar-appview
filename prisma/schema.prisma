@@ -9,10 +9,9 @@ datasource db {
 
 model Reaction {
   rkey        String   @id
-  post_uri  String
-  post_cid  String
-  emoji     String
-  record String
-  authorDid String
-  createdAt DateTime @default(now())
+  post_uri    String
+  post_cid    String
+  record      String
+  authorDid   String
+  createdAt   DateTime @default(now())
 }
