@@ -9,6 +9,7 @@ import {
   BlueMarilStellarReaction,
   BlueMojiCollectionItem,
 } from "../../generated/api/index.js";
+import { getEmojiFromPDS } from "../bluemoji/getEmoji.js";
 
 export const jetstream = new Jetstream({
   ws: WebSocket,
@@ -36,12 +37,32 @@ async function updateReaction(
     | CommitUpdateEvent<"blue.maril.stellar.reaction">
 ) {
   try {
-    const record = event.commit.record;
+    const record: BlueMarilStellarReaction = event.commit.record;
 
     if (
       BlueMarilStellarReaction.isRecord(record) &&
       BlueMarilStellarReaction.validateRecord(record)
     ) {
+      //もしAppViewに追加されていない絵文字がリアクションされたら追加する
+      const targetEmoji = await prisma.emoji.findMany({
+        where: { rkey: record.emoji.rkey, repo: record.emoji.repo },
+      });
+
+      if (targetEmoji.length <= 0) {
+        const emoji = await getEmojiFromPDS(
+          record.emoji.rkey,
+          record.emoji.repo
+        );
+
+        await prisma.emoji.create({
+          data: {
+            record: JSON.stringify(emoji),
+            rkey: record.emoji.rkey,
+            repo: record.emoji.repo,
+          },
+        });
+      }
+
       await prisma.reaction.upsert({
         where: {
           rkey: event.commit.rkey,
