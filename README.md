@@ -10,6 +10,8 @@ Write the required environment variables.
 DB_NAME=
 DB_USER=
 DB_PASS=
+
+DATABASE_URL=postgresql://${DB_USER}:${DB_PASS}@db:5432/postgres?schema=public
 ```
 
 Run the app.
